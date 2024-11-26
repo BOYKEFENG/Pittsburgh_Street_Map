@@ -101,7 +101,7 @@ def main():
     )
 
     # Define the path to the CSV file
-    csv_path = r'C:\Users\fengy\OneDrive\Desktop\24FALL\Pitts_Street_Bridge_Data\pittsburgh_street_slopes.csv'
+    csv_path = 'https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/pittsburgh_street_slopes.csv'
 
     # Load data
     data = load_data(csv_path)
