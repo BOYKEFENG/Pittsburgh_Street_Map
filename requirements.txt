@@ -1,5 +1,6 @@
 streamlit
 folium
+streamlit_folium
 pandas
 matplotlib
 osmnx
