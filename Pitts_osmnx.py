@@ -1,18 +1,31 @@
 import osmnx as ox
+import requests
 import os
 
 # Define the area of interest (Pittsburgh)
 place_name = "Pittsburgh, Pennsylvania, USA"
 
-# Download the street network (drivable roads)
-G = ox.graph_from_place(place_name, network_type='drive')
+# GitHub raw URL for the GraphML file
+graphml_url = "https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/pittsburgh_street_network.graphml"
 
-# Save the graph to a GraphML file
-output_folder = r'C:\Users\fengy\OneDrive\Desktop\24FALL\Pitts_Street_Bridge_Data'
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
-    
-graphml_filepath = os.path.join(output_folder, 'pittsburgh_street_network.graphml')
-ox.save_graphml(G, filepath=graphml_filepath)
+# Local file path
+local_graphml_file = "pittsburgh_street_network.graphml"
 
-print(f"GraphML file saved to {graphml_filepath}")
+# Check if the file exists in the repository and download it
+if not os.path.exists(local_graphml_file):
+    print("Downloading GraphML file from the GitHub repository...")
+    response = requests.get(graphml_url)
+    if response.status_code == 200:
+        with open(local_graphml_file, "wb") as file:
+            file.write(response.content)
+        print(f"GraphML file downloaded successfully to {local_graphml_file}")
+    else:
+        print("GraphML file not found in the repository. Generating a new one...")
+        # Download the street network if the file doesn't exist
+        G = ox.graph_from_place(place_name, network_type='drive')
+        ox.save_graphml(G, filepath=local_graphml_file)
+        print(f"GraphML file saved locally to {local_graphml_file}")
+else:
+    print(f"GraphML file already exists locally at {local_graphml_file}")
+
+print("Process completed successfully.")
