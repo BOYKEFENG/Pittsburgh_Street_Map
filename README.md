@@ -34,9 +34,8 @@ This project analyzes and visualizes **street slopes** in **Pittsburgh, Pennsylv
 3. **Slope Calculation**:  
    The slope percentage for each street segment is calculated as follows:
 
-   \[
-   \text{Slope Percentage} = \frac{\text{Elevation Change}}{\text{Street Length}} \times 100
-   \]
+   **Slope Percentage** = (Elevation Change / Street Length) × 100
+
 
 4. **Threshold Filtering**:  
    - Filter streets based on absolute slope percentages from **1% to 40%**.
