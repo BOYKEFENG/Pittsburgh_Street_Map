@@ -69,6 +69,31 @@ Pittsburgh_Street_Map/
 ├── Pitts_Street_Slope.py                # Script to process slope data
 ├── requirements.txt                     # Python dependencies
 └── README.md                            # Project documentation
+```
+## **Visualization**
+
+### **1. Pittsburgh Street Network Overview**
+
+The image below shows the **Pittsburgh street network** used for slope analysis. The network is processed to calculate elevation changes and slopes for each street segment.
+
+![Pittsburgh Street Network](pittsburgh_street_network.png)
+
+---
+
+### **2. Slope-Constrained Maps**
+
+This project generates **interactive maps** that visualize streets meeting slope thresholds from **1% to 40%**. Streets are color-coded based on their **slope percentage**:
+
+- **Green**: Low slope  
+- **Yellow**: Moderate slope  
+- **Red**: High slope  
+
+Each threshold map highlights streets where the **absolute slope percentage** is below a specific value.
+
+#### Example Map (Threshold ≤ 10%)
+
+To view the map for streets with slopes **≤ 10%**, open the following file:
+
 
 
 
