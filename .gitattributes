@@ -1,0 +1,3 @@
+*.py linguist-language=Python
+*.csv linguist-language=CSV
+*.html linguist-vendored
