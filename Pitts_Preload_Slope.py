@@ -1,11 +1,26 @@
 import pandas as pd
 import os
+import requests
 
-# Input file path for the original slope data CSV
-input_csv_path = r'C:\Users\fengy\OneDrive\Desktop\24FALL\Pitts_Street_Bridge_Data\pittsburgh_street_slopes.csv'
+# Input file URL for the original slope data CSV from GitHub
+input_csv_url = "https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/pittsburgh_street_slopes.csv"
+
+# Local file path to store the downloaded input CSV
+input_csv_path = "pittsburgh_street_slopes.csv"
 
 # Output folder where filtered files will be saved
-output_folder = r'C:\Users\fengy\OneDrive\Desktop\24FALL\Pitts_Street_Bridge_Data\slope_thresholds'
+output_folder = "slope_thresholds"
+
+# Download the input CSV file from GitHub
+if not os.path.exists(input_csv_path):
+    print("Downloading the input CSV file from GitHub...")
+    response = requests.get(input_csv_url)
+    if response.status_code == 200:
+        with open(input_csv_path, "wb") as file:
+            file.write(response.content)
+        print(f"Input CSV file downloaded successfully to {input_csv_path}")
+    else:
+        raise Exception(f"Failed to download input CSV. HTTP Status Code: {response.status_code}")
 
 # Create the output folder if it doesn't exist
 os.makedirs(output_folder, exist_ok=True)
