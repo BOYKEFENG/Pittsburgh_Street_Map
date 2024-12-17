@@ -139,19 +139,6 @@ The colors are scaled **dynamically** based on the minimum and maximum slope val
 - `vmin` and `vmax` are dynamically calculated from the dataset as the minimum and maximum slope values.  
 - If the slope values are identical, the range is slightly adjusted to avoid errors.
 
----
-
-Example Code for the Color Gradient:
-
-```python
-colormap = folium.LinearColormap(
-    ['green', 'yellow', 'red'],
-    vmin=min_slope,
-    vmax=max_slope
-)
-
-
----
 
 ### **Example Outputs**
 
