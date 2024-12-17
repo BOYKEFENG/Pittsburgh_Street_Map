@@ -7,22 +7,20 @@ import networkx as nx
 from shapely.geometry import Point
 import pandas as pd
 import numpy as np
+import requests
 
 # ------------------------------
 # Display Preloaded Map
 # ------------------------------
 def display_preloaded_map(threshold, map_folder):
-    # Path to the preloaded map file
-    map_file = os.path.join(map_folder, f"slope_map_threshold_{int(threshold)}.html")
-    
-    if os.path.exists(map_file):
+    map_file = f"https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/preloaded_maps/slope_map_threshold_{int(threshold)}.html"
+
+    response = requests.get(map_file)
+    if response.status_code == 200:
         st.subheader(f"Map for Absolute Slope ≤ {threshold}%")
-        # Embed the preloaded map directly in Streamlit
-        with open(map_file, 'r', encoding='utf-8') as file:
-            html = file.read()
-            st.components.v1.html(html, height=500, scrolling=True)
+        st.components.v1.html(response.text, height=500, scrolling=True)
     else:
-        st.warning(f"Preloaded map for slope threshold {threshold}% not found. Please check your map folder.")
+        st.warning(f"Preloaded map for slope threshold {threshold}% not found. Please check your repository.")
 
 # ------------------------------
 # Visualize Shortest Path with Slope Constraint
