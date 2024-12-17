@@ -6,14 +6,14 @@ from shapely.wkt import loads as wkt_loads
 # ------------------------------
 # Load Slope Data
 # ------------------------------
-def load_data(csv_path):
+def load_data(csv_url):
     try:
-        data = pd.read_csv(csv_path)
+        data = pd.read_csv(csv_url)
         # Convert WKT geometry strings to shapely LineString objects
         data['geometry'] = data['geometry'].apply(wkt_loads)
         return data
-    except FileNotFoundError:
-        print(f"CSV file not found at path: {csv_path}")
+    except Exception as e:
+        print(f"Error loading data from URL: {csv_url}\n{e}")
         return pd.DataFrame()
 
 # ------------------------------
@@ -52,21 +52,17 @@ def create_map(filtered_data, center_lat=40.4406, center_lon=-79.9959, zoom_star
 # ------------------------------
 # Generate and Save Maps
 # ------------------------------
-def generate_maps(data_folder, output_folder, thresholds=range(1, 41)):
+def generate_maps(base_url, output_folder, thresholds=range(1, 41)):
     os.makedirs(output_folder, exist_ok=True)  # Ensure output folder exists
 
     for threshold in thresholds:
         print(f"Processing map for slope threshold: {threshold}%...")
         
-        # Path to the preprocessed CSV file
-        csv_path = os.path.join(data_folder, f"pittsburgh_street_slopes_threshold_{threshold}.csv")
+        # URL to the preprocessed CSV file
+        csv_url = f"{base_url}/pittsburgh_street_slopes_threshold_{threshold}.csv"
         
-        if not os.path.exists(csv_path):
-            print(f"File for threshold {threshold}% not found. Skipping...")
-            continue
-
         # Load data
-        data = load_data(csv_path)
+        data = load_data(csv_url)
         if data.empty:
             print(f"No data found for threshold {threshold}%. Skipping...")
             continue
@@ -85,11 +81,11 @@ def generate_maps(data_folder, output_folder, thresholds=range(1, 41)):
 # Main Execution
 # ------------------------------
 if __name__ == "__main__":
-    # Path to folder containing preprocessed slope data
-    data_folder = r'C:\Users\fengy\OneDrive\Desktop\24FALL\Pitts_Street_Bridge_Data\slope_thresholds'
+    # Base GitHub URL to folder containing preprocessed slope data
+    base_url = "https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/slope_thresholds"
     
-    # Path to folder where maps will be saved
-    output_folder = r'C:\Users\fengy\OneDrive\Desktop\24FALL\Pitts_Street_Bridge_Data\preloaded_maps'
+    # Path to folder where maps will be saved locally
+    output_folder = "preloaded_maps"
 
     # Generate maps for thresholds from 1 to 40
-    generate_maps(data_folder, output_folder, thresholds=range(1, 41))
+    generate_maps(base_url, output_folder, thresholds=range(1, 41))
