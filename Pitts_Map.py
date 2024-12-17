@@ -111,8 +111,8 @@ def visualize_shortest_path_with_slope(start_location, end_location, threshold, 
 # Streamlit App Layout
 # ------------------------------
 def main():
-    st.set_page_config(page_title="Pittsburgh Truck-Suitable Street Segments Map", layout="wide")
-    st.title("Pittsburgh Truck-Suitable Street Segments Map")
+    st.set_page_config(page_title="Pittsburgh Slope-Sensitive Street Segments Map", layout="wide")
+    st.title("Pittsburgh Slope-Sensitive Street Segments Map")
     st.write("""
     This application allows you to input a slope threshold percentage and directly displays the preloaded map for that threshold. The maps are pre-generated to improve performance.
     """)
