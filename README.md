@@ -143,7 +143,7 @@ The colors are scaled **dynamically** based on the minimum and maximum slope val
 ### **Example Outputs**
 
 - **Slope-Constrained Map (Threshold ≤ 10%)**:  
-  ![Example Slope Map](https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/visualization/slope_map_threshold_10.png)
+  ![Example Slope Map](https://github.com/BOYKEFENG/Pittsburgh_Street_Map/blob/main/preloaded_maps/slope_map_threshold_10.html)
 
 - **Slope-Constrained Shortest Path**:  
   The map highlights the shortest path that satisfies the slope constraint.
