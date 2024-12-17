@@ -117,13 +117,39 @@ The app will display the **shortest truck-suitable path** on a map.
 
 ### **Color Coding for Slope Visualization**
 
-The following color scale is used to represent slope percentages:
+The slopes are visualized using a **color gradient** created with `folium.LinearColormap`:
 
-| Color        | Slope Range (%) |
-|--------------|-----------------|
-| **Green**    | Low (0% - 5%)   |
-| **Yellow**   | Moderate (5% - 15%) |
-| **Red**      | High (> 15%)    |
+- **Green**: Represents the **lowest slopes**.
+- **Yellow**: Represents **moderate slopes**.
+- **Red**: Represents the **highest slopes**.
+
+The colors are scaled **dynamically** based on the minimum and maximum slope values in the dataset. The gradient ensures a smooth transition between colors as slope values increase.
+
+---
+
+| **Color**     | **Meaning**               | **Description**                          |
+|---------------|---------------------------|------------------------------------------|
+| **Green**     | Low Slope                 | Represents streets with the **smallest slopes** (close to `vmin`). |
+| **Yellow**    | Moderate Slope            | Represents streets with **mid-range slopes**. |
+| **Red**       | High Slope                | Represents streets with the **steepest slopes** (close to `vmax`). |
+
+---
+
+**Note**:  
+- `vmin` and `vmax` are dynamically calculated from the dataset as the minimum and maximum slope values.  
+- If the slope values are identical, the range is slightly adjusted to avoid errors.
+
+---
+
+Example Code for the Color Gradient:
+
+```python
+colormap = folium.LinearColormap(
+    ['green', 'yellow', 'red'],
+    vmin=min_slope,
+    vmax=max_slope
+)
+
 
 ---
 
