@@ -169,7 +169,7 @@ def main():
 
         # User input for slope threshold
         slope_threshold = st.number_input(
-            "Enter the slope threshold percentage:", 
+            "Enter the slope threshold percentage (integer values only):", 
             min_value=1, max_value=40, value=5, step=1
         )
 
