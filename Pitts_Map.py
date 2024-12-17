@@ -18,6 +18,13 @@ def display_preloaded_map(threshold, map_folder):
     response = requests.get(map_file)
     if response.status_code == 200:
         st.subheader(f"Map for Absolute Slope ≤ {threshold}%")
+        
+        st.markdown("""  
+        **Slope Percentage** = (Elevation Change / Street Length) × 100
+        - **1% slope** is approximately **0.573 degrees**.  
+        - **1 degree** corresponds to approximately **1.75% slope**.  
+        """, unsafe_allow_html=True)
+        
         st.components.v1.html(response.text, height=500, scrolling=True)
     else:
         st.warning(f"Preloaded map for slope threshold {threshold}% not found. Please check your repository.")
@@ -149,6 +156,12 @@ def main():
     elif page == "Slope-Constrained Shortest Path Visualization":
         st.title("Visualize Shortest Path with Slope Constraint")
         st.write("Input the start and end addresses, along with a slope threshold, to compute and visualize the shortest path in Pittsburgh's street network that satisfies the slope constraint.")
+        
+        st.markdown("""  
+        **Slope Percentage** = (Elevation Change / Street Length) × 100
+        - **1% slope** is approximately **0.573 degrees**.  
+        - **1 degree** corresponds to approximately **1.75% slope**.  
+        """, unsafe_allow_html=True)
 
         # User input for start and end locations
         start_location = st.text_input("Enter Start Address or Location Name:", "Carnegie Mellon University, Pittsburgh", key="start")
