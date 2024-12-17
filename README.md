@@ -1,54 +1,61 @@
 # Pittsburgh Street Slope Visualization Project
 
-This project analyzes and visualizes **street slopes** in **Pittsburgh, Pennsylvania** to determine the suitability of streets for truck navigation based on slope constraints. It uses **Python** for data processing and generates interactive maps for slope thresholds.
+This project analyzes and visualizes **street slopes** in **Pittsburgh, Pennsylvania** to identify truck-suitable streets under slope constraints. The workflow includes downloading road network data, retrieving elevation data, calculating slopes, and visualizing results using **interactive maps**.
 
 ---
 
-## **Project Overview**
+## **Key Features**
 
-### **Purpose**
-- Analyze and visualize street slope data.
-- Identify streets that meet slope constraints (e.g., slopes ≤ 10%) for safer truck navigation.
-- Provide interactive maps for exploration.
+1. **Street Network Data**:  
+   Download and process road networks from OpenStreetMap.
 
-### **Key Features**
-1. **Street Network Data**: Download and process road networks from OpenStreetMap.
-2. **Elevation Analysis**: Retrieve elevation data for street start and end points.
-3. **Slope Calculation**: Calculate slope percentages for each road segment.
-4. **Threshold Filtering**: Filter streets by slope thresholds (1% to 40%).
-5. **Interactive Maps**: Visualize filtered streets on interactive Folium maps.
+2. **Elevation Analysis**:  
+   Retrieve elevation data for street start and end points using the TessaDEM API.
+
+3. **Slope Calculation**:  
+   Calculate slope percentages for each road segment.
+
+4. **Threshold Filtering**:  
+   Generate slope-constrained datasets for thresholds ranging from 1% to 40%.
+
+5. **Interactive Maps**:  
+   Visualize filtered streets dynamically using Folium maps.
 
 ---
 
 ## **Data Workflow**
 
-1. **Street Network Retrieval**:
-   - Download the street network for Pittsburgh and save it as a GraphML file.
+1. **Street Network Retrieval**:  
+   - Download the street network for **Pittsburgh** and save it as a `GraphML` file using `osmnx`.
 
-2. **Elevation Data**:
-   - Retrieve elevation data for each street segment using the TessaDEM API.
+2. **Elevation Data**:  
+   - Retrieve elevation data for start and end points of each street segment using the **TessaDEM API**.
 
-3. **Slope Calculation**:
-   - Calculate slopes:
-     \[
-     \text{Slope Percentage} = \frac{\text{Elevation Change}}{\text{Street Length}} \times 100
-     \]
+3. **Slope Calculation**:  
+   The slope percentage for each street segment is calculated as follows:
 
-4. **Threshold Filtering**:
-   - Generate slope-constrained datasets for thresholds from 1% to 40%.
+   \[
+   \text{Slope Percentage} = \frac{\text{Elevation Change}}{\text{Street Length}} \times 100
+   \]
 
-5. **Map Visualization**:
-   - Create interactive maps to display filtered streets for each threshold.
+4. **Threshold Filtering**:  
+   - Filter streets based on absolute slope percentages from **1% to 40%**.
+   - Generate separate CSV files for each threshold.
+
+5. **Map Visualization**:  
+   - Create interactive **Folium maps** to visualize streets that meet slope constraints.
 
 ---
 
 ## **Project Structure**
 
+The project repository is organized as follows:
+
 ```plaintext
 Pittsburgh_Street_Map/
 │
-├── pittsburgh_street_network.png        # Overview of Pittsburgh's street network
-├── pittsburgh_street_slopes.csv         # Original slope data
+├── pittsburgh_street_network.png        # Overview chart of Pittsburgh's street network
+├── pittsburgh_street_slopes.csv         # Original processed slope data
 ├── slope_thresholds/                    # Filtered slope data (1% - 40%)
 │   ├── pittsburgh_street_slopes_threshold_1.csv
 │   ├── pittsburgh_street_slopes_threshold_2.csv
@@ -63,3 +70,69 @@ Pittsburgh_Street_Map/
 ├── Pitts_Street_Slope.py                # Script to process slope data
 ├── requirements.txt                     # Python dependencies
 └── README.md                            # Project documentation
+
+## **Visualization**
+
+### **1. Pittsburgh Street Network Overview**
+
+The image below shows the **Pittsburgh street network** used for slope analysis. The network is processed to calculate elevation changes and slopes for each street segment.
+
+![Pittsburgh Street Network](pittsburgh_street_network.png)
+
+---
+
+### **2. Slope-Constrained Maps**
+
+This project generates **interactive maps** that visualize streets meeting slope thresholds from **1% to 40%**. Streets are color-coded based on their **slope percentage**:
+
+- **Green**: Low slope  
+- **Yellow**: Moderate slope  
+- **Red**: High slope  
+
+Each threshold map highlights streets where the **absolute slope percentage** is below a specific value.
+
+#### Example Map (Threshold ≤ 10%)
+
+To view the map for streets with slopes **≤ 10%**, open the following file:
+preloaded_maps/slope_map_threshold_10.html
+
+
+Alternatively, use the Streamlit app to explore maps interactively.
+
+---
+
+### **3. Slope-Constrained Shortest Path**
+
+Using the Streamlit app, you can calculate the **shortest path** between two locations under slope constraints. Streets are filtered to exclude those with slopes above the specified threshold.
+
+#### Example Workflow:
+
+1. Input the **start location** (e.g., *Carnegie Mellon University*).
+2. Input the **end location** (e.g., *6105 Spirit Street*).
+3. Specify the **slope threshold** (e.g., **10%**).
+
+The app will display the **shortest truck-suitable path** on a map.
+
+---
+
+### **Color Coding for Slope Visualization**
+
+The following color scale is used to represent slope percentages:
+
+| Color        | Slope Range (%) |
+|--------------|-----------------|
+| **Green**    | Low (0% - 5%)   |
+| **Yellow**   | Moderate (5% - 15%) |
+| **Red**      | High (> 15%)    |
+
+---
+
+### **Example Outputs**
+
+- **Slope-Constrained Map (Threshold ≤ 10%)**:  
+  ![Example Slope Map](https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/visualization/slope_map_threshold_10.png)
+
+- **Slope-Constrained Shortest Path**:  
+  The map highlights the shortest path that satisfies the slope constraint.
+
+
