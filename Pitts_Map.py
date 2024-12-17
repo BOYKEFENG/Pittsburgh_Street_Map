@@ -31,7 +31,7 @@ def visualize_shortest_path_with_slope(start_location, end_location, threshold, 
     try:
         # Load the slope data directly from CSV
         st.write("Loading street network graph from slope CSV...")
-        slope_file = r"C:\Users\fengy\OneDrive\Desktop\24FALL\Pitts_Street_Bridge_Data\pittsburgh_street_slopes.csv"
+        slope_file = "https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/pittsburgh_street_slopes.csv"
         slope_data = pd.read_csv(slope_file, skip_blank_lines=True, header=0)
         slope_data.columns = [col.strip() for col in slope_data.columns]  # Clean column names
 
@@ -143,7 +143,7 @@ def main():
             st.session_state.selected_threshold = slope_threshold
 
         # Path to the folder containing preloaded map files
-        preloaded_map_folder = r'C:\Users\fengy\OneDrive\Desktop\24FALL\Pitts_Street_Bridge_Data\preloaded_maps'
+        preloaded_map_folder = "https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/preloaded_maps"
 
         # Display the preloaded map using the stored threshold in session state
         display_preloaded_map(st.session_state.selected_threshold, preloaded_map_folder)
@@ -163,7 +163,7 @@ def main():
         )
 
         # Button to compute and display the slope-constrained shortest path
-        slope_data_folder = r'C:\Users\fengy\OneDrive\Desktop\24FALL\Pitts_Street_Bridge_Data\slope_thresholds'
+        slope_data_folder = "https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/slope_thresholds"
         if st.button("Show Slope-Constrained Shortest Path"):
             if start_location and end_location and slope_threshold:
                 with st.spinner("Calculating the shortest path with slope constraint..."):
