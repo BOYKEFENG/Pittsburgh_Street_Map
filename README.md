@@ -94,6 +94,47 @@ Each threshold map highlights streets where the **absolute slope percentage** is
 
 To view the map for streets with slopes **≤ 10%**, open the following file:
 
+preloaded_maps/slope_map_threshold_10.html
+
+
+Alternatively, use the Streamlit app to explore maps interactively.
+
+---
+
+### **3. Slope-Constrained Shortest Path**
+
+Using the Streamlit app, you can calculate the **shortest path** between two locations under slope constraints. Streets are filtered to exclude those with slopes above the specified threshold.
+
+#### Example Workflow:
+
+1. Input the **start location** (e.g., *Carnegie Mellon University*).
+2. Input the **end location** (e.g., *6105 Spirit Street*).
+3. Specify the **slope threshold** (e.g., **10%**).
+
+The app will display the **shortest truck-suitable path** on a map.
+
+---
+
+### **Color Coding for Slope Visualization**
+
+The following color scale is used to represent slope percentages:
+
+| Color        | Slope Range (%) |
+|--------------|-----------------|
+| **Green**    | Low (0% - 5%)   |
+| **Yellow**   | Moderate (5% - 15%) |
+| **Red**      | High (> 15%)    |
+
+---
+
+### **Example Outputs**
+
+- **Slope-Constrained Map (Threshold ≤ 10%)**:  
+  ![Example Slope Map](https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/visualization/slope_map_threshold_10.png)
+
+- **Slope-Constrained Shortest Path**:  
+  The map highlights the shortest path that satisfies the slope constraint.
+
 
 
 
