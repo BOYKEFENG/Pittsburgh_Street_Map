@@ -1,4 +1,4 @@
-# Pittsburgh Street Slope Visualization Project
+# Pittsburgh S2 Map
 
 This project analyzes and visualizes **street slopes** in **Pittsburgh, Pennsylvania** to identify truck-suitable streets under slope constraints. The workflow includes downloading road network data, retrieving elevation data, calculating slopes, and visualizing results using **interactive maps**.
 
