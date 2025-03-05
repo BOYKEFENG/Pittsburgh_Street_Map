@@ -6,3 +6,4 @@ matplotlib
 osmnx
 shapely
 networkx
+requests
