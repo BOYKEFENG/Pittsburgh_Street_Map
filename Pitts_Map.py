@@ -9,7 +9,10 @@ import pandas as pd
 import numpy as np
 import requests
 
-# Cache the remote HTML map fetch
+# ------------------------------
+# Caching Functions
+# ------------------------------
+
 @st.cache_data(show_spinner=False)
 def get_preloaded_map_html(url):
     response = requests.get(url)
@@ -17,7 +20,6 @@ def get_preloaded_map_html(url):
         return response.text
     return None
 
-# Cache the CSV data from GitHub so it isn’t reloaded on every interaction
 @st.cache_data(show_spinner=False)
 def load_slope_data(url):
     slope_data = pd.read_csv(url, skip_blank_lines=True, header=0)
@@ -30,6 +32,7 @@ def load_slope_data(url):
 # Display Preloaded Map
 # ------------------------------
 def display_preloaded_map(threshold):
+    # Use the GitHub URL for the preloaded map file
     map_url = f"https://raw.githubusercontent.com/BOYKEFENG/Pittsburgh_Street_Map/main/preloaded_maps/slope_map_threshold_{int(threshold)}.html"
     html = get_preloaded_map_html(map_url)
     if html:
@@ -41,7 +44,7 @@ def display_preloaded_map(threshold):
         """, unsafe_allow_html=True)
         st.components.v1.html(html, height=500, scrolling=True)
     else:
-        st.warning(f"Preloaded map for slope threshold {threshold}% not found.")
+        st.warning(f"Preloaded map for slope threshold {threshold}% not found. Please check your repository.")
 
 # ------------------------------
 # Visualize Shortest Path with Slope Constraint
@@ -57,6 +60,7 @@ def visualize_shortest_path_with_slope(start_location, end_location, threshold):
             st.error("Filtered data is empty! No streets meet the slope threshold.")
             return None
 
+        # Assign unique IDs to nodes based on coordinates.
         node_map = {}
         node_id_counter = 0
         def get_unique_node_id(lat, lon):
@@ -82,6 +86,7 @@ def visualize_shortest_path_with_slope(start_location, end_location, threshold):
 
         st.write("Graph successfully loaded and filtered by slope threshold.")
 
+        # Append Pittsburgh context if missing.
         if "Pittsburgh" not in start_location:
             start_location = f"{start_location}, Pittsburgh, PA"
         if "Pittsburgh" not in end_location:
@@ -105,9 +110,12 @@ def visualize_shortest_path_with_slope(start_location, end_location, threshold):
             return None
 
         shortest_path = nx.shortest_path(G, source=start_node, target=end_node, weight='length')
+
+        # Create a Folium map centered between start and end points.
         midpoint = [(start_point[0] + end_point[0]) / 2, (start_point[1] + end_point[1]) / 2]
         m = folium.Map(location=midpoint, zoom_start=13, tiles="CartoDB positron")
 
+        # Draw edges using detailed geometry if available.
         for i in range(len(shortest_path) - 1):
             u = shortest_path[i]
             v = shortest_path[i + 1]
@@ -119,6 +127,7 @@ def visualize_shortest_path_with_slope(start_location, end_location, threshold):
                 coords = [(G.nodes[u]['y'], G.nodes[u]['x']), (G.nodes[v]['y'], G.nodes[v]['x'])]
             folium.PolyLine(coords, color="blue", weight=5, opacity=0.7).add_to(m)
 
+        # Add markers for start and end.
         folium.Marker(location=start_point, icon=folium.Icon(color="green"), popup="Start").add_to(m)
         folium.Marker(location=end_point, icon=folium.Icon(color="red"), popup="End").add_to(m)
 
@@ -139,17 +148,18 @@ def main():
     It also lets you visualize the shortest path between two locations in Pittsburgh that satisfies the given slope constraint.
     """)
 
+    # Initialize session state flags if not present.
+    if "show_path" not in st.session_state:
+        st.session_state.show_path = False
+
     page = st.sidebar.radio("Select Page", ["Preloaded Slope Maps", "Slope-Constrained Shortest Path Visualization"])
 
     if page == "Preloaded Slope Maps":
         st.sidebar.header("Slope Threshold Input")
-        slope_threshold = st.sidebar.number_input("Enter the slope threshold percentage (integer values only)", 
+        slope_threshold = st.sidebar.number_input("Enter the slope threshold percentage (integer values only)",
                                                   min_value=1, max_value=40, value=5, step=1)
-        if 'selected_threshold' not in st.session_state:
-            st.session_state.selected_threshold = slope_threshold
-        if st.sidebar.button("Apply Changes"):
-            st.session_state.selected_threshold = slope_threshold
-
+        # Use session state to store selected threshold.
+        st.session_state.selected_threshold = slope_threshold
         display_preloaded_map(st.session_state.selected_threshold)
 
     elif page == "Slope-Constrained Shortest Path Visualization":
@@ -160,20 +170,36 @@ def main():
         - **1% slope** is approximately **0.573 degrees**.  
         - **1 degree** corresponds to approximately **1.75% slope**.  
         """, unsafe_allow_html=True)
+
         start_location = st.text_input("Enter Start Address or Location Name:", "Carnegie Mellon University, Pittsburgh", key="start")
         end_location = st.text_input("Enter End Address or Location Name:", "6105 Spirit Street", key="end")
-        slope_threshold = st.number_input("Enter the slope threshold percentage (integer values only):", 
+        slope_threshold = st.number_input("Enter the slope threshold percentage (integer values only):",
                                           min_value=1, max_value=40, value=5, step=1)
-        if st.button("Show Slope-Constrained Shortest Path"):
-            if start_location and end_location and slope_threshold:
-                with st.spinner("Calculating the shortest path with slope constraint..."):
-                    shortest_path_map = visualize_shortest_path_with_slope(start_location, end_location, slope_threshold)
-                    if shortest_path_map:
-                        st.session_state['shortest_path_with_slope'] = shortest_path_map
-                    else:
-                        st.warning("Failed to generate the map. Check the input locations or slope data.")
-        if 'shortest_path_with_slope' in st.session_state:
-            st_folium(st.session_state['shortest_path_with_slope'], width=700, height=500)
+
+        # Button with on_click callback to update session state.
+        def show_path_callback():
+            st.session_state.show_path = True
+            # Optionally, store the input values so we can compare on future clicks.
+            st.session_state.start_location = start_location
+            st.session_state.end_location = end_location
+            st.session_state.slope_threshold = slope_threshold
+
+        st.button("Show Slope-Constrained Shortest Path", on_click=show_path_callback)
+
+        # If the flag is set, compute and display the shortest path.
+        if st.session_state.show_path:
+            with st.spinner("Calculating the shortest path with slope constraint..."):
+                shortest_path_map = visualize_shortest_path_with_slope(
+                    st.session_state.start_location,
+                    st.session_state.end_location,
+                    st.session_state.slope_threshold
+                )
+                if shortest_path_map:
+                    st.session_state.shortest_path_with_slope = shortest_path_map
+                else:
+                    st.warning("Failed to generate the map. Check the input locations or slope data.")
+            if "shortest_path_with_slope" in st.session_state:
+                st_folium(st.session_state.shortest_path_with_slope, width=700, height=500)
 
 if __name__ == "__main__":
     main()
