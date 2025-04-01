@@ -21,7 +21,11 @@ This project analyzes and visualizes **street slopes** in **Pittsburgh, Pennsylv
 5. **Interactive Maps**:  
    Visualize filtered streets dynamically.
 
+## **Project Structure**
 
+The project repository is organized as follows:
+
+plaintext
 Pittsburgh_Street_Map/
 │
 ├── pittsburgh_street_network.png          
