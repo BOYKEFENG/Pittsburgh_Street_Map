@@ -5,3 +5,5 @@ pandas
 matplotlib
 osmnx
 shapely
+networkx
+requests
