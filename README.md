@@ -23,39 +23,40 @@ This project analyzes and visualizes **street slopes** in **Pittsburgh, Pennsylv
 
 ## **Project Structure**
 
-The project repository is organized as follows:
-
-plaintext
 Pittsburgh_Street_Map/
+├── pittsburgh_street_network.png          # Overview chart of Pittsburgh's street network
+├── pittsburgh_street_slopes.csv           # Original processed slope data (Vehicle Drive Network)
+├── pittsburgh_bike_slopes.csv             # Original processed slope data (Bike Network)
 │
-├── pittsburgh_street_network.png          
-├── pittsburgh_street_slopes.csv           
-├── pittsburgh_bike_slopes.csv             
-│
-├── slope_thresholds/                      
+├── slope_thresholds/                      # Filtered slope data for Vehicle Drive Network (1% - 40%)
 │   ├── pittsburgh_street_slopes_threshold_1.csv
 │   ├── pittsburgh_street_slopes_threshold_2.csv
-│   ├── ... (continues up to threshold_40)
+│   ├── ...
+│   └── pittsburgh_street_slopes_threshold_40.csv
 │
-├── preloaded_maps/                        
+├── preloaded_maps/                        # HTML maps for Vehicle Drive Network thresholds
 │   ├── slope_map_threshold_1.html
 │   ├── slope_map_threshold_2.html
-│   ├── ... (continues up to threshold_40)
+│   ├── ...
+│   └── slope_map_threshold_40.html
 │
-├── bike_slope_thresholds/                
+├── bike_slope_thresholds/                 # Filtered slope data for Bike Network (1% - 43%)
 │   ├── pittsburgh_bike_slopes_threshold_1.csv
 │   ├── pittsburgh_bike_slopes_threshold_2.csv
-│   ├── ... (continues up to threshold_43)
+│   ├── ...
+│   └── pittsburgh_bike_slopes_threshold_43.csv
 │
-├── bike_preloaded_maps/                  
+├── bike_preloaded_maps/                   # HTML maps for Bike Network thresholds
 │   ├── bike_slope_map_threshold_1.html
 │   ├── bike_slope_map_threshold_2.html
-│   ├── ... (continues up to threshold_43)
+│   ├── ...
+│   └── bike_slope_map_threshold_43.html
 │
-├── Pitts_Map.py                          
-├── Pitts_Street_Slope.py                 
-├── requirements.txt                       
-└── README.md                             
+├── Pitts_Map.py                           # Streamlit app to visualize preloaded maps
+├── Pitts_Street_Slope.py                  # Script to process slope data
+├── requirements.txt                       # Python dependencies
+└── README.md                              # Project documentation
+     
 
 ## **Visualization**
 
