@@ -10,7 +10,7 @@ This project analyzes and visualizes **street slopes** in **Pittsburgh, Pennsylv
    Download and process street networks from OpenStreetMap.
 
 2. **Elevation Analysis**:  
-   Retrieve elevation data for street start and end points from third-party resource.
+   Retrieve elevation data for street start and end points.
 
 3. **Slope Calculation**:  
    Calculate slope percentages for each street segment.
