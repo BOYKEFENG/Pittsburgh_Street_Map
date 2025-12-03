@@ -2,7 +2,7 @@
 
 This project analyzes and visualizes **street slopes** in **Pittsburgh, Pennsylvania** to identify vehicle-suitable streets under slope constraints. The workflow includes downloading road network data, retrieving elevation data, calculating slopes, and visualizing results using **interactive maps**. The map is currently running in https://pittsburghstreetmap-ntcyzxnbzfmnbe8myic9ti.streamlit.app/
 
-For a detailed overview of the methodology, data sources, and findings, please refer to: [the paper](./Pittsburgh_Slope_Sensitive_S2__Street_Map.pdf)
+For a detailed overview of the methodology, data sources, and findings, please refer to: [here](./Pittsburgh_Slope_Sensitive_S2__Street_Map.pdf)
 
 ---
 
